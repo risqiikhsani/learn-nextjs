@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown } from "lucide-react";
+import { DataTableColumnHeader } from "./date-table-column-header";
 import { ColumnDef } from "@tanstack/react-table";
 export type product = {
   id: number;
@@ -20,7 +21,7 @@ export type product = {
   stock: number;
 };
 
-export const columns : ColumnDef<product>[] = [
+export const columns: ColumnDef<product>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -31,6 +32,7 @@ export const columns : ColumnDef<product>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="translate-y-[2px]"
       />
     ),
     cell: ({ row }) => (
@@ -38,6 +40,7 @@ export const columns : ColumnDef<product>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        className="translate-y-[2px]"
       />
     ),
     enableSorting: false,
@@ -53,17 +56,10 @@ export const columns : ColumnDef<product>[] = [
   },
   {
     accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+
     cell: ({ row }) => {
       const price = parseFloat(row.getValue("price"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -76,11 +72,15 @@ export const columns : ColumnDef<product>[] = [
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Category" />
+    ),
   },
   {
     accessorKey: "stock",
-    header: "Stock",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Stock" />
+    ),
   },
   {
     id: "actions",

@@ -29,6 +29,10 @@ interface DataTableProps<TData, TValue> {
   totalPages?: number;
   onPageChange?: (page: number) => void;
   isLoading?: boolean;
+  rowSelection?: Record<string, boolean>;
+  setRowSelection?: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
 }
 
 export function DataTable<TData, TValue>({
@@ -38,15 +42,15 @@ export function DataTable<TData, TValue>({
   totalPages = 0,
   onPageChange,
   isLoading = false,
+  rowSelection = {},
+  setRowSelection = () => {},
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
     // Remove client-side pagination since we're handling it server-side
     manualPagination: true,
     pageCount: totalPages,

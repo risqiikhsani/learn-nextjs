@@ -18,6 +18,7 @@ export default function page() {
   const [isLoading, setIsLoading] = React.useState(false);
   const itemsPerPage = 10;
 
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const fetchData = async (page: number = 0) => {
     setIsLoading(true);
@@ -38,6 +39,7 @@ export default function page() {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+    setRowSelection({}); // Reset row selection on page change
     fetchData(newPage);
   };
 
@@ -47,6 +49,18 @@ export default function page() {
 
   return (
     <div>
+      <p>
+        Selected IDs:{" "}
+        {Object.keys(rowSelection)
+          .filter((key) => rowSelection[key])
+          .map((key) => {
+            const rowIndex = Number(key);
+            const row = data[rowIndex];
+            return row ? row.id : null;
+          })
+          .filter(Boolean)
+          .join(", ")}
+      </p>
       <DataTable
         columns={columns}
         data={data}
@@ -54,6 +68,8 @@ export default function page() {
         totalPages={totalPages}
         onPageChange={handlePageChange}
         isLoading={isLoading}
+        rowSelection={rowSelection}
+        setRowSelection={setRowSelection}
       />
     </div>
   );
