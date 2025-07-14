@@ -34,7 +34,7 @@ import {
   FaUnderline,
 } from "react-icons/fa6";
 
-const Tiptap = () => {
+const Tiptap = ({ content, onChange }: any) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({}),
@@ -56,12 +56,16 @@ const Tiptap = () => {
       }),
       Image,
     ],
-    content: "<p>Hello World! 🌎️</p>",
+    content: content,
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class:
           "prose prose-slate prose-sm prose-img:rounded-xl sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none",
       },
+    },
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
     },
   });
 
