@@ -1,0 +1,28 @@
+{
+	"status": true,
+	"message": "Data berhasil ditampilkan",
+	"data": {
+		"series": [
+			{
+				"name": "2025",
+				"data": [
+					0,
+					0,
+					18,
+					0,
+					0
+				]
+			}
+		],
+		"xaxis": {
+			"type": "Akses",
+			"categories": [
+				"Investigasi atas Prakarsa Sendiri",
+				"Konsultasi",
+				"Laporan Masyarakat",
+				"Respon Cepat",
+				"Tembusan"
+			]
+		}
+	}
+}
